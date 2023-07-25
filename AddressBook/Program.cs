@@ -13,7 +13,10 @@ namespace AddressBook
             // Creating a new Contact and adding it to the Address Book
             Contact newContact = new Contact("Snooki", "FF", "801 Zen Estate", "Pune", "MH", "413567", "734-456-8769", "snookiff@gmail.com");
             addressBookManager.AddContact(newContact);
-
+            Contact newContact1 = new Contact("Akshay", "Shahu", "802 Zen", "Mumbai", "MH", "413568", "734-456-8669", "akshayshahu@gmail.com");
+            addressBookManager.AddContact(newContact1);
+            Contact newContact2 = new Contact("priti", "Naik", "803 Zen", "Warje", "MH", "423567", "734-856-9760", "pritiNaik@gmail.com");
+            addressBookManager.AddContact(newContact2);
             // Displaying all contacts in the address book
             DisplayAddressBook(addressBookManager);
 
