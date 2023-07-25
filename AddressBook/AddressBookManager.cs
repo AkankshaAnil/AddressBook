@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AddressBook
 {
-    class AddressBookManager
+    internal class AddressBookManager
     {
         private List<Contact> addressBook;
 
@@ -24,5 +24,12 @@ namespace AddressBook
         {
             return addressBook;
         }
+
+        public Contact? GetContactByName(string firstName, string lastName)
+        {
+            return addressBook.FirstOrDefault(c => c.FirstName == firstName && c.LastName == lastName);
+        }
     }
+
 }
+
