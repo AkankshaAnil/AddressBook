@@ -29,7 +29,20 @@ namespace AddressBook
         {
             return addressBook.FirstOrDefault(c => c.FirstName == firstName && c.LastName == lastName);
         }
-    }
+        public void DeleteContactByName(string firstName, string lastName)
+        {
+            Contact? contactToDelete = GetContactByName(firstName, lastName);
+            if (contactToDelete != null)
+            {
+                addressBook.Remove(contactToDelete);
+                Console.WriteLine("Contact deleted successfully!");
+            }
+            else
+            {
+                Console.WriteLine("Contact not found.");
+            }
+        }
 
+    }
 }
 

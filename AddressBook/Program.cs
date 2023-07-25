@@ -58,11 +58,21 @@ namespace AddressBook
             {
                 Console.WriteLine("Contact not found.");
             }
+            Console.Write("Enter the first name of the person you want to delete: ");
+            string firstNameToDelete = Console.ReadLine() ?? ""; // Use "" as the default value if the input is null
+
+            Console.Write("Enter the last name of the person you want to delete: ");
+            string lastNameToDelete = Console.ReadLine() ?? ""; // Use "" as the default value if the input is null
+
+            addressBookManager.DeleteContactByName(firstNameToDelete, lastNameToDelete);
 
             // Display the updated address book
             DisplayAddressBook(addressBookManager);
 
             Console.WriteLine("Thank you for using the Address Book program!");
+
+            // Display the updated address book
+            DisplayAddressBook(addressBookManager);       
         }
 
         static void DisplayAddressBook(AddressBookManager addressBookManager)
