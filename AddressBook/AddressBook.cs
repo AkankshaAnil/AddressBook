@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AddressBook
 {
@@ -17,9 +14,16 @@ namespace AddressBook
             contacts = new List<Contact>();
         }
 
-        public void AddContact(Contact contact)
+        public bool AddContact(Contact contact)
         {
+            if (contacts.Contains(contact))
+            {
+                Console.WriteLine("Duplicate entry: Contact already exists.");
+                return false;
+            }
+
             contacts.Add(contact);
+            return true;
         }
 
         public List<Contact> GetContacts()
@@ -46,5 +50,4 @@ namespace AddressBook
             }
         }
     }
-
 }

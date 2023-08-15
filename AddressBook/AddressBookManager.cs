@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AddressBook
 {
-    internal class AddressBookManager
+    class AddressBookManager
     {
         private List<Contact> addressBook;
 
@@ -29,6 +27,7 @@ namespace AddressBook
         {
             return addressBook.FirstOrDefault(c => c.FirstName == firstName && c.LastName == lastName);
         }
+
         public void DeleteContactByName(string firstName, string lastName)
         {
             Contact? contactToDelete = GetContactByName(firstName, lastName);
@@ -42,7 +41,5 @@ namespace AddressBook
                 Console.WriteLine("Contact not found.");
             }
         }
-
     }
 }
-

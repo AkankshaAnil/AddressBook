@@ -8,82 +8,93 @@ namespace AddressBook
         {
             Console.WriteLine("Hello Fellow Learners!\n--Welcome to Address Book Problem--");
 
-            AddressBookManager addressBookManager = new AddressBookManager();
+            AddressBookSystem addressBookSystem = new AddressBookSystem();
 
-            // Creating a new Contact and adding it to the Address Book
-            Contact newContact = new Contact("Snooki", "FF", "801 Zen Estate", "Pune", "MH", "413567", "734-456-8769", "snookiff@gmail.com");
-            addressBookManager.AddContact(newContact);
-            Contact newContact1 = new Contact("Akshay", "Shahu", "802 Zen", "Mumbai", "MH", "413568", "734-456-8669", "akshayshahu@gmail.com");
-            addressBookManager.AddContact(newContact1);
-            Contact newContact2 = new Contact("priti", "Naik", "803 Zen", "Warje", "MH", "423567", "734-856-9760", "pritiNaik@gmail.com");
-            addressBookManager.AddContact(newContact2);
-            // Displaying all contacts in the address book
-            DisplayAddressBook(addressBookManager);
+            // Add a new Address Book using Console input
+            Console.Write("Enter the name of the new Address Book: ");
+            string newAddressBookName = Console.ReadLine()!;
 
-            // Edit an existing contact by name
-            Console.Write("Enter the first name of the contact you want to edit: ");
-            string firstNameToEdit = Console.ReadLine() ?? ""; // Use "" as the default value if the input is null
-            Console.Write("Enter the last name of the contact you want to edit: ");
-            string lastNameToEdit = Console.ReadLine() ?? ""; // Use "" as the default value if the input is null
-
-            Contact? contactToEdit = addressBookManager.GetContactByName(firstNameToEdit, lastNameToEdit);
-            if (contactToEdit != null)
+            if (!string.IsNullOrEmpty(newAddressBookName))
             {
-                Console.WriteLine("\nEnter the updated details:");
-
-                Console.Write("First Name: ");
-                contactToEdit.FirstName = Console.ReadLine() ?? ""; // Use "" as the default value if the input is null
-
-                Console.Write("Last Name: ");
-                contactToEdit.LastName = Console.ReadLine() ?? ""; // Use "" as the default value if the input is null
-
-                Console.Write("Address: ");
-                contactToEdit.Address = Console.ReadLine() ?? ""; // Use "" as the default value if the input is null
-
-                Console.Write("City: ");
-                contactToEdit.City = Console.ReadLine() ?? ""; // Use "" as the default value if the input is null
-
-                Console.Write("State: ");
-                contactToEdit.State = Console.ReadLine() ?? ""; // Use "" as the default value if the input is null
-
-                Console.Write("Zip Code: ");
-                contactToEdit.ZipCode = Console.ReadLine() ?? ""; // Use "" as the default value if the input is null
-
-                Console.Write("Phone: ");
-                contactToEdit.PhoneNumber = Console.ReadLine() ?? ""; // Use "" as the default value if the input is null
-
-                Console.Write("Email: ");
-                contactToEdit.Email = Console.ReadLine() ?? ""; // Use "" as the default value if the input is null
-
-                Console.WriteLine("Contact updated successfully!");
+                if (!addressBookSystem.AddressBookExists(newAddressBookName))
+                {
+                    addressBookSystem.AddAddressBook(newAddressBookName);
+                }
+                else
+                {
+                    Console.WriteLine($"An Address Book with the name '{newAddressBookName}' already exists.");
+                }
             }
             else
             {
-                Console.WriteLine("Contact not found.");
+                Console.WriteLine("Invalid Address Book name. Please provide a non-empty name.");
             }
-            Console.Write("Enter the first name of the person you want to delete: ");
-            string firstNameToDelete = Console.ReadLine() ?? ""; // Use "" as the default value if the input is null
 
-            Console.Write("Enter the last name of the person you want to delete: ");
-            string lastNameToDelete = Console.ReadLine() ?? ""; // Use "" as the default value if the input is null
+            // Creating contacts and adding them to the Address Book
+            AddressBook? addressBook = addressBookSystem.GetAddressBook(newAddressBookName);
+            if (addressBook != null)
+            {
+                Contact newContact1 = new Contact(
+                    firstName: "John",
+                    lastName: "Doe",
+                    address: "123 Main St",
+                    city: "Cityville",
+                    state: "Stateville",
+                    zipCode: "12345",
+                    phoneNumber: "123-456-7890",
+                    email: "john.doe@example.com"
+                );
 
-            addressBookManager.DeleteContactByName(firstNameToDelete, lastNameToDelete);
+                Contact newContact2 = new Contact(
+                    firstName: "Jane",
+                    lastName: "Smith",
+                    address: "456 Elm St",
+                    city: "Townville",
+                    state: "Stateville",
+                    zipCode: "67890",
+                    phoneNumber: "987-654-3210",
+                    email: "jane.smith@example.com"
+                );
 
-            // Display the updated address book
-            DisplayAddressBook(addressBookManager);
+                if (addressBook.AddContact(newContact1))
+                {
+                    Console.WriteLine("Contact added successfully.");
+                }
+                else
+                {
+                    Console.WriteLine("Contact already exists. Duplicate entry not allowed.");
+                }
+
+                if (addressBook.AddContact(newContact2))
+                {
+                    Console.WriteLine("Contact added successfully.");
+                }
+                else
+                {
+                    Console.WriteLine("Contact already exists. Duplicate entry not allowed.");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Address Book '{newAddressBookName}' not found.");
+            }
+
+            // Displaying all contacts in the address book
+            DisplayAddressBook(addressBook);
 
             Console.WriteLine("Thank you for using the Address Book program!");
-
-            // Display the updated address book
-            DisplayAddressBook(addressBookManager);       
         }
 
-        static void DisplayAddressBook(AddressBookManager addressBookManager)
+        static void DisplayAddressBook(AddressBook? addressBook)
         {
-            var addressBook = addressBookManager.GetAddressBook();
+            if (addressBook == null)
+            {
+                Console.WriteLine("Address Book not found.");
+                return;
+            }
 
-            Console.WriteLine("\nAddress Book Entries:");
-            foreach (Contact contact in addressBook)
+            Console.WriteLine($"\nAddress Book '{addressBook.Name}' Entries:");
+            foreach (Contact contact in addressBook.GetContacts())
             {
                 Console.WriteLine($"Name: {contact.FirstName} {contact.LastName}");
                 Console.WriteLine($"Address: {contact.Address}");
